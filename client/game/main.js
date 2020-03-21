@@ -24,8 +24,8 @@ const getMaterialList = (event) => {
     }))
 }
 
-const applyLight = (light) => {
-  console.log(light)
+const applyLight = (lightInfo) => {
+  light.setColor(chroma(lightInfo.tint).num())
 }
 
 const applyMaterial = (name, materialList) => {
@@ -54,15 +54,64 @@ const config = {
 
 
 const game = new Phaser.Game(config);
+let player, cursors, layer, light;
 
 function preload() {
+  this.load.image('tiles', [ 'assets/tilesets/default_texture.png','assets/tilesets/default_texture_u.png' ]);
 
+  this.load.tilemapTiledJSON({
+    key: 'map',
+    url: 'assets/tilemaps/map.json'
+  });
+
+  this.load.spritesheet('player', 'assets/sprites/spaceman.png', { frameWidth: 32, frameHeight: 48 });
 }
 
 function create() {
+  const map = this.make.tilemap({ key: 'map' });
+  const tiles = map.addTilesetImage('default', 'tiles');
+  const layer = map.createDynamicLayer(0, tiles, 0, 0);
+  light  = this.lights.addLight(192, 192, 128);
+  light.setIntensity(2);
+  light.setColor(0xf2e2c1)
+  this.lights.enable().setAmbientColor(0x222222);
 
+  layer.setPipeline('Light2D');
+  
+  map.setCollision(1)
+
+  player = this.physics.add.sprite(192, 192, 'player', 0);
+
+  this.physics.add.collider(player, layer);
+
+  this.cameras.main.startFollow(player);
+  
+  cursors = this.input.keyboard.createCursorKeys();
 }
 
 function update() {
+  player.body.setVelocity(0);
 
+  // Horizontal movement
+  if (cursors.left.isDown)
+  {
+      player.body.setVelocityX(-100);
+  }
+  else if (cursors.right.isDown)
+  {
+      player.body.setVelocityX(100);
+  }
+
+  // Vertical movement
+  if (cursors.up.isDown)
+  {
+      player.body.setVelocityY(-100);
+  }
+  else if (cursors.down.isDown)
+  {
+      player.body.setVelocityY(100);
+  }
+
+  light.x = player.x;
+  light.y = player.y;
 }
