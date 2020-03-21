@@ -6,9 +6,9 @@ class LightForm extends HTMLElement {
     this.innerHTML = `
       <details>
         <summary><h3>Light</h3></summary>
-        <form>
+        <form name="light">
           <label>
-            <input name="light-color" type="color" />
+            <input class="tint" name="light-color" type="color" />
             Light Color 
           </label>
           <button>Apply to scene</button>

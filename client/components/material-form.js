@@ -42,6 +42,7 @@ class MaterialForm extends HTMLElement {
 
     this.form.addEventListener('submit', (event) => {
       event.preventDefault()
+      event.stopPropagation()
       const materialData = getMaterialFormData(event)
       const addItemEvent = new CustomEvent('additem', { detail: materialData })
 

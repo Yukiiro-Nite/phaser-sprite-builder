@@ -90,13 +90,12 @@ class MaterialList extends HTMLElement {
 
   handleApply = (event) => {
     event.preventDefault()
-    console.log(event.target.elements)
   }
 
   render() {
-    console.log(this.items)
+    const name = this.getAttribute('name')
     this.innerHTML = `
-      <form>
+      <form name="${name}">
         <ul class="material-list">
           ${
             this.items.map((item, index) => `

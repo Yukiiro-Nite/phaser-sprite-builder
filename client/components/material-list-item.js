@@ -13,8 +13,8 @@ class MaterialListItem extends HTMLElement {
         <input class="visibility mt-16 mr-16" type="checkbox" title="visible" />
         <details>
           <summary><div class="summary-content">
-            <img id="${name}-texture" src="${texture}"></img>
-            <img id="${name}-normal" src="${normal}" hidden></img>
+            <img class="texture-img" id="${name}-texture" src="${texture}"></img>
+            <img class="normal-img" id="${name}-normal" src="${normal}" hidden></img>
             <h4>${name}</h4>
             <span class="up-down-container">
               <button class="up-button" title="Move up"></button>
@@ -22,7 +22,7 @@ class MaterialListItem extends HTMLElement {
             </span>
           </div></summary>
           <label class="mb-16">
-            <input type="color" />
+            <input class="tint" id="${name}-tint" type="color" />
             Tint
           </label>
           <button class="remove-button" class="mb-16">remove</button>
